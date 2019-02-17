@@ -41,7 +41,11 @@ def start():
     """
     print(json.dumps(data))
 
-    color = "#00FF00"
+    color = "#A9A9A9"
+	#secondary_color = "#00FF00
+	#taunt = YUKI HAYASHI
+	#head_type = pixel
+	#tail_type = pixel
 
     return start_response(color)
 
