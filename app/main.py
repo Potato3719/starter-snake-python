@@ -6,12 +6,14 @@ import bottle
 from api import ping_response, start_response, move_response, end_response
 
 
+
 @bottle.route('/')
 def index():
     return '''
     Battlesnake documentation can be found at
        <a href="https://docs.battlesnake.io">https://docs.battlesnake.io</a>.
     '''
+
 
 @bottle.route('/static/<path:path>')
 def static(path):
@@ -23,6 +25,7 @@ def static(path):
     """
     return bottle.static_file(path, root='static/')
 
+
 @bottle.post('/ping')
 def ping():
     """
@@ -31,26 +34,22 @@ def ping():
     """
     return ping_response()
 
+
 @bottle.post('/start')
 def start():
     data = bottle.request.json
-
-    print("hello world")
-    json_string = json.dumps(data)
-    json_data = json.loads(json_string)
 
     """
     TODO: If you intend to have a stateful snake AI,
             initialize your snake state here using the
             request's data if necessary.
     """
+    print("start part")
+    print("================")
     # print(json.dumps(data))
-    print("hello world")
-    color = "#A9A9A9"
-    # secondary_color = "#00FF00
-	# taunt = YUKI HAYASHI
-	# head_type = pixel
-	# tail_type = pixel
+
+    # color blue
+    color = "#003BFF"
 
     return start_response(color)
 
@@ -91,7 +90,7 @@ def move():
                 direction = 'down'
             else:
                 direction = 'right'
-        elif my_position_y[0] == height - 1:
+        elif my_position_y[0] == height-1:
             if my_position_x[1] == 1:
                 direction = 'up'
             else:
@@ -100,27 +99,27 @@ def move():
             direction = 'up'
         else:
             direction = 'right'
-    elif my_position_x[0] == width - 1:
+    elif my_position_x[0] == width-1:
         if my_position_y[0] == 0:
-            if my_position_x[1] == width - 2:
+            if my_position_x[1] == width-2:
                 direction = 'down'
             else:
                 direction = 'left'
-        elif my_position_y[0] == height - 1:
-            if my_position_y[1] == height - 2:
+        elif my_position_y[0] == height-1:
+            if my_position_y[1] == height-2:
                 direction = 'left'
             else:
                 direction = 'up'
-        elif my_position_x[1] == width - 2:
+        elif my_position_x[1] == width-2:
             direction = 'up'
         else:
             direction = 'left'
-    elif my_position_y[0] == 0 and my_position_x[0] != 0 and my_position_x[0] != width - 1:
+    elif my_position_y[0] == 0 and my_position_x[0] != 0 and my_position_x[0] != width-1:
         if my_position_y[1] == 1:
             direction = 'left'
         else:
             direction = 'down'
-    elif my_position_y[0] == height - 1 and my_position_x[0] != 0 and my_position_x[0] != width - 1:
+    elif my_position_y[0] == height-1 and my_position_x[0] != 0 and my_position_x[0] != width-1:
         if my_position_y[1] == height - 2:
             direction = 'right'
         else:
@@ -135,7 +134,8 @@ def move():
         else:
             direction = 'up'
 
-return move_response(direction)
+    print(direction)
+    return move_response(direction)
 
 
 @bottle.post('/end')
@@ -146,7 +146,9 @@ def end():
     TODO: If your snake AI was stateful,
         clean up any stateful objects here.
     """
-   # print(json.dumps(data))
+    print("end part")
+    print("================")
+    # print(json.dumps(data))
 
     return end_response()
 
