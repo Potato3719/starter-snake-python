@@ -5,6 +5,7 @@ import bottle
 
 from api import ping_response, start_response, move_response, end_response
 
+
 @bottle.route('/')
 def index():
     return '''
@@ -34,19 +35,22 @@ def ping():
 def start():
     data = bottle.request.json
 
+    print("hello world")
+    json_string = json.dumps(data)
+    json_data = json.loads(json_string)
+
     """
     TODO: If you intend to have a stateful snake AI,
             initialize your snake state here using the
             request's data if necessary.
     """
-    print(json.dumps(data))
-
+    # print(json.dumps(data))
+    print("hello world")
     color = "#A9A9A9"
-
-	#secondary_color = "#00FF00
-	#taunt = YUKI HAYASHI
-	#head_type = pixel
-	#tail_type = pixel
+    # secondary_color = "#00FF00
+	# taunt = YUKI HAYASHI
+	# head_type = pixel
+	# tail_type = pixel
 
     return start_response(color)
 
@@ -54,17 +58,84 @@ def start():
 @bottle.post('/move')
 def move():
     data = bottle.request.json
-
     """
     TODO: Using the data from the endpoint request object, your
             snake AI must choose a direction to move in.
     """
-    print(json.dumps(data))
+    print("move part")
+    print("================")
+    # print(json.dumps(data))
+    json_string = json.dumps(data)
+    game_data = json.loads(json_string)
+    height = game_data["board"]["height"]
+    width = game_data["board"]["width"]
 
+    # to get my postion
+    my_position_x = []
+    my_position_y = []
+    for i in range(0, len(game_data["you"]["body"])):
+        my_position_x.append(int(game_data["you"]["body"][i]["x"]))
+        my_position_y.append(int(game_data["you"]["body"][i]["y"]))
+
+    print(my_position_x[0])
+    print(my_position_y[0])
+    print(height)
+    print(width)
+
+    # try to not hit wall
+    # direction = random.choice(directions)
     directions = ['up', 'down', 'left', 'right']
-    direction = random.choice(directions)
+    if my_position_x[0] == 0:
+        if my_position_y[0] == 0:
+            if my_position_x[1] == 1:
+                direction = 'down'
+            else:
+                direction = 'right'
+        elif my_position_y[0] == height - 1:
+            if my_position_x[1] == 1:
+                direction = 'up'
+            else:
+                direction = 'right'
+        elif my_position_x[1] == 1:
+            direction = 'up'
+        else:
+            direction = 'right'
+    elif my_position_x[0] == width - 1:
+        if my_position_y[0] == 0:
+            if my_position_x[1] == width - 2:
+                direction = 'down'
+            else:
+                direction = 'left'
+        elif my_position_y[0] == height - 1:
+            if my_position_y[1] == height - 2:
+                direction = 'left'
+            else:
+                direction = 'up'
+        elif my_position_x[1] == width - 2:
+            direction = 'up'
+        else:
+            direction = 'left'
+    elif my_position_y[0] == 0 and my_position_x[0] != 0 and my_position_x[0] != width - 1:
+        if my_position_y[1] == 1:
+            direction = 'left'
+        else:
+            direction = 'down'
+    elif my_position_y[0] == height - 1 and my_position_x[0] != 0 and my_position_x[0] != width - 1:
+        if my_position_y[1] == height - 2:
+            direction = 'right'
+        else:
+            direction = 'up'
+    else:
+        if my_position_x[1] == my_position_x[0] - 1:
+            direction = 'right'
+        elif my_position_x[1] == my_position_x[0] + 1:
+            direction = 'left'
+        elif my_position_y[1] == my_position_y - 1:
+            direction = 'down'
+        else:
+            direction = 'up'
 
-    return move_response(direction)
+return move_response(direction)
 
 
 @bottle.post('/end')
@@ -75,7 +146,7 @@ def end():
     TODO: If your snake AI was stateful,
         clean up any stateful objects here.
     """
-    print(json.dumps(data))
+   # print(json.dumps(data))
 
     return end_response()
 
