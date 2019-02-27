@@ -39,6 +39,9 @@ def ping():
 def start():
     data = bottle.request.json
 
+    json_string = json.dumps(data)
+    game_data = json.loads(json_string)
+
     """
     TODO: If you intend to have a stateful snake AI,
             initialize your snake state here using the
@@ -49,7 +52,10 @@ def start():
     # print(json.dumps(data))
 
     # color blue
-    color = "#003BFF"
+    color = "#000000"
+    HeadType = "safe"
+    TailType = "skinny"
+
 
     return start_response(color)
 
@@ -76,10 +82,10 @@ def move():
         my_position_x.append(int(game_data["you"]["body"][i]["x"]))
         my_position_y.append(int(game_data["you"]["body"][i]["y"]))
 
-    print(my_position_x[0])
-    print(my_position_y[0])
-    print(height)
-    print(width)
+    # print(my_position_x[0])
+    # print(my_position_y[0])
+    # print(height)
+    # print(width)
 
     # try to not hit wall
     # direction = random.choice(directions)
@@ -134,7 +140,23 @@ def move():
         else:
             direction = 'up'
 
-    print(direction)
+    #get position of food
+    food_position_x = []
+    food_position_y = []
+
+    for i in range(0, len(game_data["board"]["food"])):
+        food_position_x.append(int(game_data["board"]["food"][i]["x"]))
+        if food_position_x[i] > my_position_x[0]:
+            for j in range(0, food_position_x[i] - my_position_x[0]):
+                print(food_position_x[i])
+                direction = 'right'
+
+        if food_position_x[i] < my_position_x[i]:
+            for j in range(0, my_position_x[0] - food_position_x[i]):
+                direction = 'left'
+
+        #food_position_y.append(int(game_data["board"]["food"][i]["y"]))
+
     return move_response(direction)
 
 
