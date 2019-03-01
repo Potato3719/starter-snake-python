@@ -119,6 +119,9 @@ def init(data):
 @bottle.post('/move')
 def move():
     data = bottle.request.json
+    foodstring = json.dumps(data)
+    foodstore = json.loads(foodstring)
+
     """
 	TODO: Using the data from the endpoint request object, your
 			snake AI must choose a direction to move in.
@@ -126,6 +129,32 @@ def move():
     print("move part")
     print("================\n")
     wall, myhead, mybody, snakehead, snakexy, height, width = init(data)
+
+    myfood2D = []
+    myfoodx = []
+    myfoody = []
+
+    for foodxposition in foodstore['board']['food']['x']:
+        myfoodx.append(list(foodxposition.values())) #appends x position of food in an array
+
+    for foodyposition in foodstore['board']['food']['y']:
+        myfoody.append(list(foodyposition.values())) #appends y position of food in an array
+
+    for foodposition in foodstore['board']['food']:
+        myfood2D.append(list(foodposition.values())) #appends position of food into a 2D array
+
+    head = [myhead[0], myhead[1]]
+
+    move = []
+
+    if foodxposition[0] < foodstore['you']['body']['x'][0]:
+        move.append("left")
+    if foodxposition[0] > foodstore['you']['body']['x'][0]:
+        move.append("right")
+    if foodyposition[0] < foodstore['you']['body']['y'][0]:
+        move.append("up")
+    if foodyposition[0] > foodstore['you']['body']['y'][0]:
+        move.append("down")
 
     safe = []
 
@@ -135,6 +164,7 @@ def move():
     down = [myhead[0], myhead[1] + 1]
     up = [myhead[0], myhead[1] - 1]
 
+    """
     if right not in snakexy and right[0] != height:  # right direction
         # right is safe
         safe.append("right")
@@ -156,6 +186,10 @@ def move():
     direction = random.choice(safe)
 
     print("moveresponse\n" + "==========\n" + str(direction) + "\n")
+    """
+
+    direction = move
+
     return move_response(direction)
 
 
