@@ -205,7 +205,7 @@ def move():
         if up in killpotential:
             dirkillpotential.append("up")
 
-    if right not in snakexyexcepttailplusheadposiblemoves and right[0] != (width - 1):  # right direction
+    if right not in snakexyexcepttailplusheadposiblemoves and right[0] != width - 1:  # right direction
         # right is safe
         safezone.append(right)
         safe.append("right")
@@ -215,7 +215,7 @@ def move():
     if down not in snakexyexcepttailplusheadposiblemoves and down[1] != 0:
         safezone.append(down)
         safe.append("down")
-    if up not in snakexyexcepttailplusheadposiblemoves and up[1] != (height - 1):
+    if up not in snakexyexcepttailplusheadposiblemoves and up[1] != height - 1:
         safezone.append(up)
         safe.append("up")
 
