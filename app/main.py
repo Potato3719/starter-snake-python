@@ -93,10 +93,10 @@ def init(data):
 
     wall = []  # 2d array of coordinates
 
-    for i in range(0, height):
-        wall.append([-1, i])
+    for i in range(0, height - 1):
+        wall.append([0, i])
 
-    for i in range(0, height):
+    for i in range(0, height - 1):
         wall.append([width - 1, i])
 
     for i in range(1, width - 1):
