@@ -93,10 +93,10 @@ def init(data):
 
     wall = []  # 2d array of coordinates
 
-    for i in range(0, height - 1):
+    for i in range(0, height):
         wall.append([-1, i])
 
-    for i in range(0, height - 1):
+    for i in range(0, height):
         wall.append([width - 1, i])
 
     for i in range(1, width - 1):
@@ -203,17 +203,17 @@ def move():
         if up in killpotential:
             dirkillpotential.append("up")
 
-    if right not in snakexyexcepttailplusheadposiblemoves and right[0] != width:  # right direction
+    if right not in snakexyexcepttailplusheadposiblemoves and right[0] != height:  # right direction
         # right is safe
         safezone.append(right)
         safe.append("right")
-    if left not in snakexyexcepttailplusheadposiblemoves and left[0] != 0:
+    if left not in snakexyexcepttailplusheadposiblemoves and left[0] != -1:
         safezone.append(left)
         safe.append("left")
-    if down not in snakexyexcepttailplusheadposiblemoves and down[1] != 0:
+    if down not in snakexyexcepttailplusheadposiblemoves and down[1] != height:
         safezone.append(down)
         safe.append("down")
-    if up not in snakexyexcepttailplusheadposiblemoves and up[1] != height:
+    if up not in snakexyexcepttailplusheadposiblemoves and up[1] != -1:
         safezone.append(up)
         safe.append("up")
 
