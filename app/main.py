@@ -54,11 +54,10 @@ def start():
 
     return start_response(color, headType, tailType)
 
-# initiates all data
+
 def init(data):
     # print("init")
     # print("=================\n")
-    # use datastore to attain the 'data' from json
     datastring = json.dumps(data)
     datastore = json.loads(datastring)
     # print(datastore)
@@ -82,8 +81,8 @@ def init(data):
 
         snakelength.append(len(snake['body']));
 
-        snakehead.append(list(snake['body'][0].values()))  # append all snakes head coordinates to an array of snake heads (eachcoordsofhead array in allsnakearray) (2dArray)
-
+        snakehead.append(list(snake['body'][
+                                  0].values()))  # append all snakes head coordinates to an array of snake heads (eachcoordsofhead array in allsnakearray) (2dArray)
         for coords in snake['body']:
             if list(coords.values()) not in snakexy:
                 snakexy.append(list(coords.values()))
@@ -94,8 +93,8 @@ def init(data):
 
     wall = []  # 2d array of coordinates
 
-    ffor i in range(0, height):
-        wall.append([0, i])
+    for i in range(0, height):
+        wall.append([-1, i])
 
     for i in range(0, height):
         wall.append([width - 1, i])
@@ -109,7 +108,6 @@ def init(data):
     food_x = []
     food_y = []
 
-    # distance to food
     for i in range(0, len(datastore["board"]["food"])):
         food_x.append(int(datastore["board"]["food"][i]["x"]))
         food_y.append(int(datastore["board"]["food"][i]["y"]))
@@ -118,7 +116,6 @@ def init(data):
     my_position_x = []
     my_position_y = []
 
-    # distance of body from board
     for i in range(0, len(datastore["you"]["body"])):
         my_position_x.append(int(datastore["you"]["body"][i]["x"]))
         my_position_y.append(int(datastore["you"]["body"][i]["y"]))
@@ -128,19 +125,18 @@ def init(data):
 
 # snakexy now does not include tails that disappear in the next iteration
 
-# i don't think we need this
-"""def dist_calc(target, test1, test2):  # test1 must be zero, test 2 must be body width or height
+def dist_calc(target, test1, test2):  # test1 must be zero, test 2 must be body width or height
     # if the minimum is in zero, return True, if the minimum is in width or height, return False
     test1_output = [abs(target - x) for x in test1]
     test2_output = [abs(target - x) for x in test2]
     print("test1_output\n" + "===========\n" + str(test1_output) + "\n")
     print("test2_output\n" + "===========\n" + str(test2_output) + "\n")
-   if min(test1_output) < min(test2_output):
+    if min(test1_output) < min(test2_output):
         print("dist_calc returns True\n")
         return True;
     else:
         print("dist_calc returns True\n")
-        return False;"""
+        return False;
 
 
 @bottle.post('/move')
@@ -151,7 +147,8 @@ def move():
             snake AI must choose a direction to move in.
     """
     # print("move part================\n")
-    wall, myhead, mybody, mylength, myhealth, snakehead, snakexy, snakeid, snakelength, height, width, food_x, food_y, my_position_x, my_position_y = init(data)
+    wall, myhead, mybody, mylength, myhealth, snakehead, snakexy, snakeid, snakelength, height, width, food_x, food_y, my_position_x, my_position_y = init(
+        data)
 
     safe = []
 
@@ -164,6 +161,7 @@ def move():
     snakexyexcepttailplusheadposiblemoves = snakexy
     snakeheadexceptmine = snakehead
     snakeheadexceptmine.remove(myhead)
+
 
     killpotential = []
     j = 0
@@ -205,17 +203,17 @@ def move():
         if up in killpotential:
             dirkillpotential.append("up")
 
-    if right not in snakexyexcepttailplusheadposiblemoves and right[0] != height:  # right direction
+    if right not in snakexyexcepttailplusheadposiblemoves and right[0] != width - 1:  # right direction
         # right is safe
         safezone.append(right)
         safe.append("right")
-    if left not in snakexyexcepttailplusheadposiblemoves and left[0] != -1:
+    if left not in snakexyexcepttailplusheadposiblemoves and left[0] != 0:
         safezone.append(left)
         safe.append("left")
-    if down not in snakexyexcepttailplusheadposiblemoves and down[1] != height:
+    if down not in snakexyexcepttailplusheadposiblemoves and down[1] != 0:
         safezone.append(down)
         safe.append("down")
-    if up not in snakexyexcepttailplusheadposiblemoves and up[1] != -1:
+    if up not in snakexyexcepttailplusheadposiblemoves and up[1] != height - 1:
         safezone.append(up)
         safe.append("up")
 
