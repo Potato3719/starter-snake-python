@@ -424,8 +424,8 @@ def move():
     # the 4 direction we can go
     left_x = my_position_x[0] - 1
     right_x = my_position_x[0] + 1
-    down_y = my_position_y[0] - 1
-    up_y = my_position_y[0] + 1
+    down_y = my_position_y[0] + 1
+    up_y = my_position_y[0] - 1
 
     # now let's see who is the closest snake to us
     min_dist_dict = {}
