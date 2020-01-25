@@ -98,13 +98,13 @@ def init(data):
         wall.append([-1, i])
 
     for i in range(0, height):
-        wall.append([width, i])
+        wall.append([width-1, i])
 
     for i in range(1, width - 1):
         wall.append([i, -1])
 
     for i in range(1, width - 1):
-        wall.append([i, height])
+        wall.append([i, height-1])
 
     food_x = []
     food_y = []
