@@ -432,7 +432,7 @@ def move():
 
     # Check for right
     if "right" in safer:
-       distance_min = 9999999999
+        distance_min = 9999999999
         for i in range(0, len(food_x)):
             x = food_x[i] - right_x
             y = food_y[i] - my_position_y[0]
@@ -442,7 +442,7 @@ def move():
         min_dist_dict["right"] = distance_min
 
     if "left" in safer:
-       distance_min = 9999999999
+        distance_min = 9999999999
         for i in range(0, len(food_x)):
             x = food_x[i] - left_x
             y = food_y[i] - my_position_y[0]
@@ -452,8 +452,8 @@ def move():
         min_dist_dict["left"] = distance_min
 
     if "down" in safer:
-       distance_min = 9999999999
-        for i in range(0, len(food_y)):
+        distance_min = 9999999999
+        for i in range(0, len(food_x)):
             x = food_x[i] - my_position_x[0]
             y = food_y[i] - down_y
             distance = x ** 2 + y ** 2
@@ -462,13 +462,13 @@ def move():
         min_dist_dict["down"] = distance_min
 
     if "up" in safer:
-       distance_min = 9999999999
-        for i in range(0, len(food_y)):
+        distance_min = 9999999999
+        for i in range(0, len(food_x)):
             x = food_x[i] - my_position_x[0]
             y = food_y[i] - up_y
             distance = x ** 2 + y ** 2
             if distance_min > distance:
-               distance_min = distance
+                distance_min = distance
         min_dist_dict["up"] = distance_min
 
     # dir = 0
