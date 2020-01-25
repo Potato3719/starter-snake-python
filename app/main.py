@@ -95,16 +95,16 @@ def init(data):
     wall = []  # 2d array of coordinates
 
     for i in range(0, height):
-        wall.append([0, i])
+        wall.append([-1, i])
 
     for i in range(0, height):
-        wall.append([width - 1, i])
+        wall.append([width, i])
 
     for i in range(1, width - 1):
-        wall.append([i, 0])
+        wall.append([i, -1])
 
     for i in range(1, width - 1):
-        wall.append([i, height - 1])
+        wall.append([i, height])
 
     food_x = []
     food_y = []
