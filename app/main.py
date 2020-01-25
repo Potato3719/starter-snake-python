@@ -94,16 +94,16 @@ def init(data):
 
     wall = []  # 2d array of coordinates
 
-    for i in range(1, height - 1):
+    ffor i in range(0, height):
         wall.append([0, i])
 
-    for i in range(1, height - 1):
+    for i in range(0, height):
         wall.append([width - 1, i])
 
-    for i in range(width - 1, 1):
+    for i in range(1, width - 1):
         wall.append([i, 0])
 
-    for i in range(width - 1, 1):
+    for i in range(1, width - 1):
         wall.append([i, height - 1])
 
     food_x = []
@@ -151,8 +151,7 @@ def move():
             snake AI must choose a direction to move in.
     """
     # print("move part================\n")
-    wall, myhead, mybody, mylength, myhealth, snakehead, snakexy, snakeid, snakelength, height, width, food_x, food_y, my_position_x, my_position_y = init(
-        data)
+    wall, myhead, mybody, mylength, myhealth, snakehead, snakexy, snakeid, snakelength, height, width, food_x, food_y, my_position_x, my_position_y = init(data)
 
     safe = []
 
@@ -165,7 +164,6 @@ def move():
     snakexyexcepttailplusheadposiblemoves = snakexy
     snakeheadexceptmine = snakehead
     snakeheadexceptmine.remove(myhead)
-
 
     killpotential = []
     j = 0
@@ -207,17 +205,17 @@ def move():
         if up in killpotential:
             dirkillpotential.append("up")
 
-    if right not in snakexyexcepttailplusheadposiblemoves and right[0] != height:  # right direction
+    if right not in snakexyexcepttailplusheadposiblemoves and right[0] != (width - 1):  # right direction
         # right is safe
         safezone.append(right)
         safe.append("right")
-    if left not in snakexyexcepttailplusheadposiblemoves and left[0] != -1:
+    if left not in snakexyexcepttailplusheadposiblemoves and left[0] != 0:
         safezone.append(left)
         safe.append("left")
-    if down not in snakexyexcepttailplusheadposiblemoves and down[1] != height:
+    if down not in snakexyexcepttailplusheadposiblemoves and down[1] != 0:
         safezone.append(down)
         safe.append("down")
-    if up not in snakexyexcepttailplusheadposiblemoves and up[1] != -1:
+    if up not in snakexyexcepttailplusheadposiblemoves and up[1] != (height - 1):
         safezone.append(up)
         safe.append("up")
 
