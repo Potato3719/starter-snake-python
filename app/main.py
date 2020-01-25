@@ -54,10 +54,11 @@ def start():
 
     return start_response(color, headType, tailType)
 
-
+# initiates all data
 def init(data):
     # print("init")
     # print("=================\n")
+    # use datastore to attain the 'data' from json
     datastring = json.dumps(data)
     datastore = json.loads(datastring)
     # print(datastore)
@@ -81,8 +82,8 @@ def init(data):
 
         snakelength.append(len(snake['body']));
 
-        snakehead.append(list(snake['body'][
-                                  0].values()))  # append all snakes head coordinates to an array of snake heads (eachcoordsofhead array in allsnakearray) (2dArray)
+        snakehead.append(list(snake['body'][0].values()))  # append all snakes head coordinates to an array of snake heads (eachcoordsofhead array in allsnakearray) (2dArray)
+
         for coords in snake['body']:
             if list(coords.values()) not in snakexy:
                 snakexy.append(list(coords.values()))
@@ -94,7 +95,7 @@ def init(data):
     wall = []  # 2d array of coordinates
 
     for i in range(0, height):
-        wall.append([-1, i])
+        wall.append([0, i])
 
     for i in range(0, height):
         wall.append([width - 1, i])
@@ -108,6 +109,7 @@ def init(data):
     food_x = []
     food_y = []
 
+    # distance to food
     for i in range(0, len(datastore["board"]["food"])):
         food_x.append(int(datastore["board"]["food"][i]["x"]))
         food_y.append(int(datastore["board"]["food"][i]["y"]))
@@ -116,6 +118,7 @@ def init(data):
     my_position_x = []
     my_position_y = []
 
+    # distance of body from board
     for i in range(0, len(datastore["you"]["body"])):
         my_position_x.append(int(datastore["you"]["body"][i]["x"]))
         my_position_y.append(int(datastore["you"]["body"][i]["y"]))
@@ -125,18 +128,19 @@ def init(data):
 
 # snakexy now does not include tails that disappear in the next iteration
 
-def dist_calc(target, test1, test2):  # test1 must be zero, test 2 must be body width or height
+# i don't think we need this
+"""def dist_calc(target, test1, test2):  # test1 must be zero, test 2 must be body width or height
     # if the minimum is in zero, return True, if the minimum is in width or height, return False
     test1_output = [abs(target - x) for x in test1]
     test2_output = [abs(target - x) for x in test2]
     print("test1_output\n" + "===========\n" + str(test1_output) + "\n")
     print("test2_output\n" + "===========\n" + str(test2_output) + "\n")
-    if min(test1_output) < min(test2_output):
+   if min(test1_output) < min(test2_output):
         print("dist_calc returns True\n")
         return True;
     else:
         print("dist_calc returns True\n")
-        return False;
+        return False;"""
 
 
 @bottle.post('/move')
