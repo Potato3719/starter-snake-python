@@ -429,7 +429,7 @@ def move():
 
     # now let's see who is the closest snake to us
     min_dist_dict = {}
-    if myhealth < 60:
+
     # Check for right
         if "right" in safer:
             distance_min = 9999999999
