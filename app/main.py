@@ -414,71 +414,74 @@ def move():
     print("dirkillpotential\n" + "===========\n" + str(dirkillpotential) + "\n")
     dirkillpotentialandsafer = [value for value in dirkillpotential if value in safer]
     print("dirkillpotentialandsafer\n" + "===========\n" + str(dirkillpotentialandsafer) + "\n")
-    if myhealth > 20 and dirkillpotentialandsafer:
+    if myhealth > 40 and dirkillpotentialandsafer:
         direction = random.choice(dirkillpotentialandsafer)
         print("direction\n" + "===========\n" + str(direction) + "\n")
         return move_response(direction)
 
     # CHECKINGFOODWITHSAFER
+    if myhealth < 40:
+        # the 4 direction we can go
+        left_x = my_position_x[0] - 1
+        right_x = my_position_x[0] + 1
+        down_y = my_position_y[0] + 1
+        up_y = my_position_y[0] - 1
 
-    # the 4 direction we can go
-    left_x = my_position_x[0] - 1
-    right_x = my_position_x[0] + 1
-    down_y = my_position_y[0] + 1
-    up_y = my_position_y[0] - 1
+        # now let's see who is the closest snake to us
+        min_dist_dict = {}
 
-    # now let's see who is the closest snake to us
-    min_dist_dict = {}
+        # Check for right
+        if "right" in safer:
+            distance_min = 9999999999
+            for i in range(0, len(food_x)):
+                x = food_x[i] - right_x
+                y = food_y[i] - my_position_y[0]
+                distance = x ** 2 + y ** 2
+                if distance_min > distance:
+                    distance_min = distance
+            min_dist_dict["right"] = distance_min
 
-    # Check for right
-    if "right" in safer:
-        distance_min = 9999999999
-        for i in range(0, len(food_x)):
-            x = food_x[i] - right_x
-            y = food_y[i] - my_position_y[0]
-            distance = x ** 2 + y ** 2
-            if distance_min > distance:
-                distance_min = distance
-        min_dist_dict["right"] = distance_min
+        if "left" in safer:
+            distance_min = 9999999999
+            for i in range(0, len(food_x)):
+                x = food_x[i] - left_x
+                y = food_y[i] - my_position_y[0]
+                distance = x ** 2 + y ** 2
+                if distance_min > distance:
+                    distance_min = distance
+            min_dist_dict["left"] = distance_min
 
-    if "left" in safer:
-        distance_min = 9999999999
-        for i in range(0, len(food_x)):
-            x = food_x[i] - left_x
-            y = food_y[i] - my_position_y[0]
-            distance = x ** 2 + y ** 2
-            if distance_min > distance:
-                distance_min = distance
-        min_dist_dict["left"] = distance_min
+        if "down" in safer:
+            distance_min = 9999999999
+            for i in range(0, len(food_x)):
+                x = food_x[i] - my_position_x[0]
+                y = food_y[i] - down_y
+                distance = x ** 2 + y ** 2
+                if distance_min > distance:
+                    distance_min = distance
+            min_dist_dict["down"] = distance_min
 
-    if "down" in safer:
-        distance_min = 9999999999
-        for i in range(0, len(food_x)):
-            x = food_x[i] - my_position_x[0]
-            y = food_y[i] - down_y
-            distance = x ** 2 + y ** 2
-            if distance_min > distance:
-                distance_min = distance
-        min_dist_dict["down"] = distance_min
+        if "up" in safer:
+            distance_min = 9999999999
+            for i in range(0, len(food_x)):
+                x = food_x[i] - my_position_x[0]
+                y = food_y[i] - up_y
+                distance = x ** 2 + y ** 2
+                if distance_min > distance:
+                    distance_min = distance
+            min_dist_dict["up"] = distance_min
 
-    if "up" in safer:
-        distance_min = 9999999999
-        for i in range(0, len(food_x)):
-            x = food_x[i] - my_position_x[0]
-            y = food_y[i] - up_y
-            distance = x ** 2 + y ** 2
-            if distance_min > distance:
-                distance_min = distance
-        min_dist_dict["up"] = distance_min
+        # dir = 0
 
-    # dir = 0
+        # for i in range(0 , 3):
+        # if distance_min[i] == min(distance_min):
+        # dir = i
 
-    # for i in range(0 , 3):
-    # if distance_min[i] == min(distance_min):
-    # dir = i
+        direction = min(min_dist_dict, key=min_dist_dict.get)
+        print("direction\n" + "===========\n" + str(direction) + "\n")
+        return move_response(direction)
 
-    direction = min(min_dist_dict, key=min_dist_dict.get)
-    print("direction\n" + "===========\n" + str(direction) + "\n")
+    direction = random.choice(safer)
     return move_response(direction)
 
 
