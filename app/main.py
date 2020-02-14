@@ -420,7 +420,7 @@ def move():
         return move_response(direction)
 
     # CHECKINGFOODWITHSAFER
-    if myhealth < 40:
+    if myhealth < 20:
         # the 4 direction we can go
         left_x = my_position_x[0] - 1
         right_x = my_position_x[0] + 1
